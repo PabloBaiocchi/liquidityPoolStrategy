@@ -5,6 +5,11 @@ from query import Query
 
 uniswap_endpoint='https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
 
+def getStablePoolHistory(min_tvl):
+    stable_pools=getStablePools(min_tvl)
+    df_list=[getPoolHistory(pool_id) for pool_id in stable_pools.pool_id]
+    return pd.concat(df_list).reset_index(drop=True)
+
 def getStablePools(min_tvl):
     q=Query('./queries/stable_pair_pools')
     response=requests.post(uniswap_endpoint,json={'query':q.getQuery({'__tvl__':10000000})})
@@ -26,6 +31,7 @@ def getPoolHistory(pool_id):
     df['tvlUSD']=df.tvlUSD.astype(float)
     df['volumeUSD']=df.volumeUSD.astype(float)
     df['feesUSD']=df.feesUSD.astype(float)
+    df['pool_id']=pool_id
     return df
 
 def cleanPoolResponse(raw):
