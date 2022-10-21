@@ -1,0 +1,10 @@
+{
+  pools(where: {id: __id__}){
+    poolDayData(first: 1000){
+        date
+        tvlUSD
+        volumeUSD
+        feesUSD
+    }
+  }
+}

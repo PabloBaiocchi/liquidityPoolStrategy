@@ -1,0 +1,17 @@
+{
+  pools(first: 1000,
+    		where: {
+          token0_: {symbol_in: ["USDT","USDC","DAI","BUSD"]}
+					token1_: {symbol_in: ["USDT","USDC","DAI","BUSD"]}
+          totalValueLockedUSD_gt: __tvl__
+        }){
+    token0{
+      symbol
+    }
+    token1{
+      symbol
+    }
+    totalValueLockedUSD
+    id
+  }
+}
